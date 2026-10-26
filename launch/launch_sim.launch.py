@@ -52,6 +52,7 @@ def generate_launch_description():
     )
 
     # Bridge ( [ = Gazebo->ROS,  ] = ROS->Gazebo )
+    # NOTE: Gazebo's odom->base_link TF is NOT bridged; the EKF publishes it.
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -59,9 +60,8 @@ def generate_launch_description():
             # time + control
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
-            # odometry + tf + joints (encoders)
+            # odometry + joints (encoders)
             '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
-            '/model/mobile_robot/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             f'/world/{world_name}/model/mobile_robot/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
             # LiDAR
             '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
@@ -75,14 +75,25 @@ def generate_launch_description():
             '/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
         ],
         remappings=[
-            ('/model/mobile_robot/tf', '/tf'),
             (f'/world/{world_name}/model/mobile_robot/joint_state', '/joint_states'),
         ],
         parameters=[{'use_sim_time': True}],
         output='screen'
     )
 
-     # Colour-mapped depth image
+    # EKF: fuses wheel odometry + IMU, publishes odom -> base_link
+    ekf = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        parameters=[
+            os.path.join(pkg_share, 'config', 'ekf.yaml'),
+            {'use_sim_time': True}
+        ],
+        output='screen'
+    )
+
+    # Colour-mapped depth image
     depth_colorizer = Node(
         package='mobile_robot',
         executable='depth_colorizer',
@@ -94,7 +105,6 @@ def generate_launch_description():
         output='screen'
     )
 
-
     # RViz
     rviz = Node(
         package='rviz2',
@@ -105,4 +115,4 @@ def generate_launch_description():
         output='screen'
     )
 
-    return LaunchDescription([rsp, gazebo, spawn_robot, bridge, depth_colorizer, rviz])
+    return LaunchDescription([rsp, gazebo, spawn_robot, bridge, ekf, depth_colorizer, rviz])
