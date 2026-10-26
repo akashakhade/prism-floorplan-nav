@@ -1,0 +1,1502 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+    <world name="default">
+
+    <!-- ===== Gazebo systems (needed once any plugin is declared) ===== -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+
+    <!-- renders LiDAR + RGB-D camera -->
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- IMU data -->
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.55 0.55 0.55 1</ambient>
+      <background>0.72 0.75 0.88 1</background>
+      <shadows>true</shadows>
+      <grid>false</grid>
+    </scene>
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 12 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.25 0.25 0.25 1</specular>
+      <direction>-0.4 0.3 -1</direction>
+    </light>
+
+    <model name="floor">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>16 12 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>16 12 0.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.72 0.68 0.58 1.0</ambient>
+        <diffuse>0.72 0.68 0.58 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0 0 -0.05 0 0 0</pose>
+    </model>
+    <model name="back_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>16 0.15 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>16 0.15 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0 6 1.4 0 0 0</pose>
+    </model>
+    <model name="left_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 12 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 12 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-8 0 1.4 0 0 0</pose>
+    </model>
+    <model name="right_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 12 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 12 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>8 0 1.4 0 0 0</pose>
+    </model>
+    
+    <model name="front_wall_left">
+  <static>true</static>
+  <link name="link">
+    <collision name="collision">
+      <geometry><box><size>7.3 0.15 2.8</size></box></geometry>
+    </collision>
+    <visual name="visual">
+      <pose>0 0 0.0 0 0 0</pose>
+      <geometry><box><size>7.3 0.15 2.8</size></box></geometry>
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+    </visual>
+  </link>
+  <pose>-4.35 -6 1.4 0 0 0</pose>
+</model>
+
+   <model name="front_wall_right">
+  <static>true</static>
+  <link name="link">
+    <collision name="collision">
+      <geometry><box><size>7.3 0.15 2.8</size></box></geometry>
+    </collision>
+    <visual name="visual">
+      <pose>0 0 0.0 0 0 0</pose>
+      <geometry><box><size>7.3 0.15 2.8</size></box></geometry>
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+    </visual>
+  </link>
+  <pose>4.35 -6 1.4 0 0 0</pose>
+</model>
+
+    <model name="front_door_headers">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+      <pose>0 0 0.0 0 0 0</pose>
+      <geometry><box><size>1.35 0.05 2.1</size></box></geometry>
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.7252 -5.255 1.05 0 0 1.5708</pose>
+    </model>
+
+    <model name="bedroom_left_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 4.95 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 4.95 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-0.0 3.45 1.4 0 0 0</pose>
+    </model>
+
+    <model name="bedroom_front_left">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>5.35 0.15 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>5.35 0.15 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-5.25 1.0 1.4 0 0 0</pose>
+    </model>
+
+    <model name="bedroom_front_mid">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.15 0.15 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.15 0.15 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.0 1.0 1.4 0 0 0</pose>
+    </model>
+
+    <model name="bedroom_front_right">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>5.35 0.15 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>5.35 0.15 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>5.25 1.0 1.4 0 0 0</pose>
+    </model>
+
+    <model name="kitchen_right_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-3.15 -3.45 1.4 0 0 0</pose>
+    </model>
+
+    <model name="toilet_left_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.15 -3.45 1.4 0 0 0</pose>
+    </model>
+
+    <model name="toilet_split_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 5.0 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>5.55 -3.45 1.4 0 0 0</pose>
+    </model>
+
+    <model name="toilet_bottom_wall">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.25 0.15 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.25 0.15 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.75 -5.15 1.4 0 0 0</pose>
+    </model>
+
+    <model name="foyer_left_return">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 1.9 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 1.9 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-5.6465 -5.1243 1.4000 0 0 0</pose>
+    </model>
+
+    <model name="foyer_right_return">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.15 1.9 2.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.15 1.9 2.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.88 0.86 0.82 1.0</ambient>
+        <diffuse>0.88 0.86 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>5.5287 -0.9672 1.4043 0 0 1.5606</pose>
+    </model>
+
+    <model name="bed1_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 1.0 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-0.7867 1.5060 1.0500 0 0 0.4644</pose>
+    </model>
+
+    <model name="bed2_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 1.0 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.7072 1.5447 1.0500 0 0 2.8370</pose>
+    </model>
+
+    <model name="kitchen_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 1.0 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-3.17 -1.75 1.05 0 0 1.5708</pose>
+    </model>
+
+    <model name="toilet1_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 0.9 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.17 -2.0 1.05 0 0 1.5708</pose>
+    </model>
+
+    <model name="toilet2_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 0.9 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.17 -4.7 1.05 0 0 1.5708</pose>
+    </model>
+
+    <model name="washroom1_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 1.0 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>7.7668 -1.4999 1.0500 0 0 2.7910</pose>
+    </model>
+
+     <model name="washroom2_door">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.05 1.0 2.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.48 0.28 0.14 1.0</ambient>
+        <diffuse>0.48 0.28 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.5040 -1.4073 1.0500 0 0 0.5960</pose>
+    </model>
+
+
+    <model name="window_bed1">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.3 0.03 1.35</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.48 0.65 0.65</ambient>
+        <diffuse>0.2 0.48 0.65 0.65</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-4.9 5.92 1.55 0 0 0</pose>
+    </model>
+
+    <model name="window_bed2">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.3 0.03 1.35</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.48 0.65 0.65</ambient>
+        <diffuse>0.2 0.48 0.65 0.65</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.9 5.92 1.55 0 0 0</pose>
+    </model>
+
+    <model name="window_kitchen">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.0 0.03 1.25</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.48 0.65 0.65</ambient>
+        <diffuse>0.2 0.48 0.65 0.65</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.8 -5.92 1.55 0 0 0</pose>
+    </model>
+
+    <model name="bed1_frame">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 2.0 0.45</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.5 2.0 0.45</size></box></geometry>
+          
+      <material>
+        <ambient>0.36 0.2 0.1 1.0</ambient>
+        <diffuse>0.36 0.2 0.1 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.8021 3.8249 0.2148 0 0 1.5628</pose>
+    </model>
+
+    <model name="bed1_mattress">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.35 1.85 0.25</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.35 1.85 0.25</size></box></geometry>
+          
+      <material>
+        <ambient>0.86 0.86 0.9 1.0</ambient>
+        <diffuse>0.86 0.86 0.9 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.8613 3.8152 0.5800 0 0 1.5595</pose>
+    </model>
+    
+    <model name="bed1_headboard">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 0.12 1.6</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.5 0.12 1.6</size></box></geometry>
+          
+      <material>
+        <ambient>0.3 0.17 0.08 1.0</ambient>
+        <diffuse>0.3 0.17 0.08 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.8500 3.8373 0.7816 0 0 1.5657</pose>
+    </model>
+
+    <model name="bed1_pillow1">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.96 0.96 0.96 1.0</ambient>
+        <diffuse>0.96 0.96 0.96 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.5390 4.4075 0.7700 0 0 1.5568</pose>
+    </model>
+    <model name="bed1_pillow2">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.96 0.96 0.96 1.0</ambient>
+        <diffuse>0.96 0.96 0.96 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.5475 3.2634 0.7700 0 0 1.5697</pose>
+    </model>
+    <model name="bed1_side_table">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.42 0.24 0.12 1.0</ambient>
+        <diffuse>0.42 0.24 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.6632 5.5234 0.3695 0 0 0</pose>
+    </model>
+    <model name="bed1_wardrobe">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.1 0.65 2.4</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.1 0.65 2.4</size></box></geometry>
+          
+      <material>
+        <ambient>0.72 0.58 0.4 1.0</ambient>
+        <diffuse>0.72 0.58 0.4 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.0918 1.4013 1.1906 0 0 0</pose>
+    </model>
+    <model name="bed1_desk">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.5 0.55 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.5 0.55 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.32 0.18 1.0</ambient>
+        <diffuse>0.5 0.32 0.18 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-0.7483 5.6338 0.7200 0 0 0</pose>
+    </model>
+
+    <model name="bed1_desk_leg">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.1 0.1 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.1 0.1 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.2 0.2 1.0</ambient>
+        <diffuse>0.2 0.2 0.2 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-1.3759 5.6394 0.3500 0 0 0</pose>
+    </model>
+
+    <model name="bed1_chair">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.18 0.28 0.36 1.0</ambient>
+        <diffuse>0.18 0.28 0.36 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-0.7151 5.1345 0.2460 0 0 0</pose>
+    </model>
+    <model name="bed2_frame">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 2.0 0.45</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.5 2.0 0.45</size></box></geometry>
+          
+      <material>
+        <ambient>0.36 0.2 0.1 1.0</ambient>
+        <diffuse>0.36 0.2 0.1 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.7837 3.5183 0.2173 0 0 -1.5702</pose>
+    </model>
+    <model name="bed2_mattress">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.35 1.85 0.25</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.35 1.85 0.25</size></box></geometry>
+          
+      <material>
+        <ambient>0.84 0.9 0.84 1.0</ambient>
+        <diffuse>0.84 0.9 0.84 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.8389 3.5100 0.5652 0 0 -1.5609</pose>
+    </model>
+    <model name="bed2_headboard">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.5 0.12 1.6</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.5 0.12 1.6</size></box></geometry>
+          
+      <material>
+        <ambient>0.3 0.17 0.08 1.0</ambient>
+        <diffuse>0.3 0.17 0.08 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>7.8580 3.5222 0.7875 0 0 -1.5746</pose>
+    </model>
+    <model name="bed2_pillow1">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.96 0.96 0.96 1.0</ambient>
+        <diffuse>0.96 0.96 0.96 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>7.5355 4.1371 0.7700 0 0 1.5583</pose>
+    </model>
+    <model name="bed2_pillow2">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.96 0.96 0.96 1.0</ambient>
+        <diffuse>0.96 0.96 0.96 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>7.5233 2.9341 0.7700 0 0 -1.5849</pose>
+    </model>
+    <model name="bed2_side_table">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.42 0.24 0.12 1.0</ambient>
+        <diffuse>0.42 0.24 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>7.6236 5.1926 0.3487 0 0 0</pose>
+    </model>
+
+    <model name="bed2_wardrobe">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.1 0.65 2.4</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.1 0.65 2.4</size></box></geometry>
+          
+      <material>
+        <ambient>0.72 0.58 0.4 1.0</ambient>
+        <diffuse>0.72 0.58 0.4 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.2293 1.4101 1.2500 0 0 0</pose>
+    </model>
+    <model name="bed2_desk">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.5 0.55 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.5 0.55 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.32 0.18 1.0</ambient>
+        <diffuse>0.5 0.32 0.18 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.7930 5.6473 0.7278 0 0 0</pose>
+    </model>
+
+    <model name="bed2_desk_leg">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.1 0.1 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.1 0.1 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.2 0.2 1.0</ambient>
+        <diffuse>0.2 0.2 0.2 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>1.4236 5.6365 0.3503 0 0 0</pose>
+    </model>
+
+    <model name="bed2_chair">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.18 0.28 0.36 1.0</ambient>
+        <diffuse>0.18 0.28 0.36 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.7991 5.1746 0.2515 0 0 0</pose>
+    </model>
+    <model name="sofa_long">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.5 0.75 0.55</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>3.5 0.75 0.55</size></box></geometry>
+          
+      <material>
+        <ambient>0.22 0.38 0.44 1.0</ambient>
+        <diffuse>0.22 0.38 0.44 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-2.6937 -3.5364 0.2824 0 0 1.5683</pose>
+    </model>
+
+    <model name="sofa_back">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.5 0.18 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>3.5 0.18 1.0</size></box></geometry>
+          
+      <material>
+        <ambient>0.2 0.34 0.4 1.0</ambient>
+        <diffuse>0.2 0.34 0.4 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-2.9802 -3.5407 1.0168 0 0 1.5700</pose>
+    </model>
+
+    <model name="sofa_side">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 1.6 0.55</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 1.6 0.55</size></box></geometry>
+          
+      <material>
+        <ambient>0.22 0.38 0.44 1.0</ambient>
+        <diffuse>0.22 0.38 0.44 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-2.2738 -5.5633 0.2720 0 0 1.5666</pose>
+    </model>
+
+    <model name="tv_console">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.2 0.45 0.65</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.2 0.45 0.65</size></box></geometry>
+          
+      <material>
+        <ambient>0.34 0.22 0.14 1.0</ambient>
+        <diffuse>0.34 0.22 0.14 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>2.7863 -3.3471 0.3509 0 0 -1.5563</pose>
+    </model>
+    <model name="tv_screen">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.8 0.08 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.8 0.08 1.0</size></box></geometry>
+          
+      <material>
+        <ambient>0.05 0.06 0.07 1.0</ambient>
+        <diffuse>0.05 0.06 0.07 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>3.0048 -3.3711 1.5500 0 0 -1.5604</pose>
+    </model>
+    <model name="dining_table">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.1 1.1 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>2.1 1.1 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.54 0.34 0.18 1.0</ambient>
+        <diffuse>0.54 0.34 0.18 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.0203 0.4867 0.7500 0 0 0</pose>
+    </model>
+    <model name="dining_leg1">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.1 0.1 0.75</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.1 0.1 0.75</size></box></geometry>
+          
+      <material>
+        <ambient>0.25 0.18 0.12 1.0</ambient>
+        <diffuse>0.25 0.18 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.9279 0.0736 0.3800 0 0 0</pose>
+    </model>
+
+    <model name="dining_leg2">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.1 0.1 0.75</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.1 0.1 0.75</size></box></geometry>
+          
+      <material>
+        <ambient>0.25 0.18 0.12 1.0</ambient>
+        <diffuse>0.25 0.18 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-5.1120 0.0946 0.3800 0 0 0</pose>
+    </model>
+
+    <model name="dining_chair1">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.28 0.16 1.0</ambient>
+        <diffuse>0.5 0.28 0.16 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.2608 0.4978 0.1558 0 0 0</pose>
+    </model>
+
+    <model name="dining_chair2">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.28 0.16 1.0</ambient>
+        <diffuse>0.5 0.28 0.16 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-4.7776 0.5595 0.2521 0 0 0</pose>
+    </model>
+    <model name="dining_chair3">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.55 0.55 0.8</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.28 0.16 1.0</ambient>
+        <diffuse>0.5 0.28 0.16 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.2421 -1.4229 0.4500 0 0 0</pose>
+    </model>
+    
+    <model name="kitchen_counter_back">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>3.5 0.65 1.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>3.5 0.65 1.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.65 0.65 0.67 1.0</ambient>
+        <diffuse>0.65 0.65 0.67 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.1647 -2.0500 0.5500 0 0 0</pose>
+    </model>
+
+    <model name="kitchen_counter_left">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.65 2.0 1.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.65 2.0 1.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.65 0.65 0.67 1.0</ambient>
+        <diffuse>0.65 0.65 0.67 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.5849 -3.1500 0.5500 0 0 0</pose>
+    </model>
+    <model name="kitchen_sink">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.75 0.45 0.08</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.75 0.45 0.08</size></box></geometry>
+          
+      <material>
+        <ambient>0.72 0.74 0.76 1.0</ambient>
+        <diffuse>0.72 0.74 0.76 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-5.3 -2.05 1.15 0 0 0</pose>
+    </model>
+    <model name="kitchen_stove">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.8 0.48 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.8 0.48 0.1</size></box></geometry>
+          
+      <material>
+        <ambient>0.12 0.12 0.12 1.0</ambient>
+        <diffuse>0.12 0.12 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-6.1 -2.05 1.16 0 0 0</pose>
+    </model>
+    <model name="kitchen_fridge">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.0 0.9 2.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.0 0.9 2.5</size></box></geometry>
+          
+      <material>
+        <ambient>0.78 0.8 0.82 1.0</ambient>
+        <diffuse>0.78 0.8 0.82 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-7.4155 -4.7417 1.2500 0 0 0</pose>
+    </model>
+
+    <model name="kitchen_island">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.5 0.75 1.15</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.5 0.75 1.15</size></box></geometry>
+          
+      <material>
+        <ambient>0.6 0.52 0.42 1.0</ambient>
+        <diffuse>0.6 0.52 0.42 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-3.6745 -5.2090 0.7200 0 0 1.5499</pose>
+    </model>
+    <model name="toilet1_bowl">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.38</radius><length>0.65</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.38</radius><length>0.65</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.93 0.93 0.93 1.0</ambient>
+        <diffuse>0.93 0.93 0.93 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.7927 -4.6119 0.3500 0 0 0</pose>
+    </model>
+
+    <model name="toilet1_tank">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.7 0.25 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.7 0.25 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.93 0.93 0.93 1.0</ambient>
+        <diffuse>0.93 0.93 0.93 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>6.7663 -4.9442 0.7500 0 0 0</pose>
+    </model>
+
+    <model name="toilet1_sink">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.65 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.65 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.94 0.94 0.94 1.0</ambient>
+        <diffuse>0.94 0.94 0.94 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>5.9916 -1.2506 0.7800 0 0 0</pose>
+    </model>
+    
+    <model name="toilet2_bowl">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.38</radius><length>0.65</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.38</radius><length>0.65</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.93 0.93 0.93 1.0</ambient>
+        <diffuse>0.93 0.93 0.93 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>4.2500 -5.4613 0.3500 0 0 0</pose>
+    </model>
+    <model name="toilet2_tank">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.7 0.25 0.7</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.7 0.25 0.7</size></box></geometry>
+          
+      <material>
+        <ambient>0.93 0.93 0.93 1.0</ambient>
+        <diffuse>0.93 0.93 0.93 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>4.2500 -5.7985 0.7500 0 0 0</pose>
+    </model>
+    <model name="toilet2_sink">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.65 0.45 0.12</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>0.65 0.45 0.12</size></box></geometry>
+          
+      <material>
+        <ambient>0.94 0.94 0.94 1.0</ambient>
+        <diffuse>0.94 0.94 0.94 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>5.1994 -1.3720 0.7800 0 0 1.5493</pose>
+    </model>
+    
+    <model name="storage_cabinet">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.4 0.45 1.2</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry><box><size>1.4 0.45 1.2</size></box></geometry>
+          
+      <material>
+        <ambient>0.5 0.34 0.2 1.0</ambient>
+        <diffuse>0.5 0.34 0.2 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-4.7172 -5.6553 0.6500 0 0 0</pose>
+    </model>
+    <model name="entry_plant_pot">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.32</radius><length>0.5</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.32</radius><length>0.5</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.45 0.26 0.12 1.0</ambient>
+        <diffuse>0.45 0.26 0.12 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.0513 0.5904 0.2800 0 0 0</pose>
+    </model>
+
+    <model name="entry_plant_stem">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.06</radius><length>1.0</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.18 0.45 0.2 1.0</ambient>
+        <diffuse>0.18 0.45 0.2 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0.0513 0.5904 1.03 0 0 0</pose>
+    </model>
+    <model name="ceiling_light_0">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.18</radius><length>0.06</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.95 0.9 0.7 1.0</ambient>
+        <diffuse>0.95 0.9 0.7 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-5 -3 2.72 0 0 0</pose>
+    </model>
+    <model name="ceiling_light_1">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.18</radius><length>0.06</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.95 0.9 0.7 1.0</ambient>
+        <diffuse>0.95 0.9 0.7 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>0 -1 2.72 0 0 0</pose>
+    </model>
+    <model name="ceiling_light_2">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.18</radius><length>0.06</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.95 0.9 0.7 1.0</ambient>
+        <diffuse>0.95 0.9 0.7 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>4 -1 2.72 0 0 0</pose>
+    </model>
+    <model name="ceiling_light_3">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.18</radius><length>0.06</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.95 0.9 0.7 1.0</ambient>
+        <diffuse>0.95 0.9 0.7 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>-4 3.5 2.72 0 0 0</pose>
+    </model>
+    <model name="ceiling_light_4">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.18</radius><length>0.06</length></cylinder></geometry>
+          
+      <material>
+        <ambient>0.95 0.9 0.7 1.0</ambient>
+        <diffuse>0.95 0.9 0.7 1.0</diffuse>
+        <specular>0.15 0.15 0.15 1</specular>
+      </material>
+        </visual>
+      </link>
+      <pose>4 3.5 2.72 0 0 0</pose>
+    </model>  </world>
+</sdf>

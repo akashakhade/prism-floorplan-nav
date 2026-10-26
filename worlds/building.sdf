@@ -1,0 +1,370 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="building_world">
+
+    <!-- Physics -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.9 1</background>
+      <shadows>true</shadows>
+      <grid>false</grid>
+    </scene>
+
+    <!-- Sun -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+
+
+    <!-- FLOOR -->
+    <model name="floor">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>6 4 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>6 4 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.6 0.6 0.6 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+
+      </link>
+      <pose>0 0 -0.05 0 0 0</pose>
+    </model>
+
+
+    <!-- BACK WALL -->
+    <model name="back_wall">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>6 0.1 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>6 0.1 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Color.jpg</albedo_map>
+                <normal_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_NormalGL.jpg</normal_map>
+                <roughness_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Roughness.jpg</roughness_map>
+                <ambient_occlusion_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_AmbientOcclusion.jpg</ambient_occlusion_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+
+      </link>
+      <pose>0 2 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- FRONT WALL - LEFT -->
+    <model name="front_wall_left">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2.5 0.1 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2.5 0.1 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Color.jpg</albedo_map>
+                <normal_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_NormalGL.jpg</normal_map>
+                <roughness_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Roughness.jpg</roughness_map>
+                <ambient_occlusion_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_AmbientOcclusion.jpg</ambient_occlusion_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+
+      </link>
+      <pose>-1.75 -2 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- FRONT WALL - RIGHT -->
+    <model name="front_wall_right">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2.5 0.1 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2.5 0.1 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Color.jpg</albedo_map>
+                <normal_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_NormalGL.jpg</normal_map>
+                <roughness_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Roughness.jpg</roughness_map>
+                <ambient_occlusion_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_AmbientOcclusion.jpg</ambient_occlusion_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+
+      </link>
+      <pose>1.75 -2 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- FRONT DOOR TOP -->
+    <model name="front_door_top">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 0.1 0.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 0.1 0.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+
+      </link>
+      <pose>0 -2 2.25 0 0 0</pose>
+    </model>
+
+
+    <!-- LEFT OUTER WALL -->
+    <model name="left_wall">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 4 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 4 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Color.jpg</albedo_map>
+                <normal_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_NormalGL.jpg</normal_map>
+                <roughness_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Roughness.jpg</roughness_map>
+                <ambient_occlusion_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_AmbientOcclusion.jpg</ambient_occlusion_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+
+      </link>
+      <pose>-3 0 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- RIGHT OUTER WALL -->
+    <model name="right_wall">
+      <static>true</static>
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 4 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 4 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Color.jpg</albedo_map>
+                <normal_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_NormalGL.jpg</normal_map>
+                <roughness_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_Roughness.jpg</roughness_map>
+                <ambient_occlusion_map>file:///home/akashakhade/ros2_ws/src/mobile_robot/resource/Bricks104_1K-JPG/Bricks104_1K-JPG_AmbientOcclusion.jpg</ambient_occlusion_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+
+      </link>
+      <pose>3 0 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- INTERNAL WALL - LEFT SIDE -->
+    <model name="internal_wall_left">
+      <static>true</static>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.15 1.0 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.15 1.5 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+
+      </link>
+
+      <pose>1 -1.25 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- INTERNAL WALL - RIGHT SIDE -->
+    <model name="internal_wall_right">
+      <static>true</static>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.15 1.5 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.15 1.5 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+
+      </link>
+
+      <pose>1 1.25 1.25 0 0 0</pose>
+    </model>
+
+
+    <!-- INTERNAL DOOR TOP -->
+    <model name="internal_door_top">
+      <static>true</static>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.15 1.0 0.5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.15 1.0 0.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+
+      </link>
+
+      <pose>1 0 2.25 0 0 0</pose>
+    </model>
+
+  </world>
+</sdf>
