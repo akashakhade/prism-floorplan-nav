@@ -24,7 +24,7 @@ def generate_launch_description():
     world_file = os.path.join(pkg_share, 'worlds', 'two_bhk_realistic_world.sdf')
     world_name = get_world_name(world_file)
 
-    rviz_config = os.path.join(pkg_share, 'config', 'view.rviz')
+    rviz_config = os.path.join(pkg_share, 'config', 'drive_bot.rviz')
     rviz_args = ['-d', rviz_config] if os.path.exists(rviz_config) else []
 
     # Robot State Publisher
