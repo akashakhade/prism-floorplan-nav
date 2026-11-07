@@ -13,7 +13,7 @@ def generate_launch_description():
     package_name = 'mobile_robot'
     pkg_share = get_package_share_directory(package_name)
 
-    rviz_config = os.path.join(pkg_share, 'config', 'view.rviz')
+    rviz_config = os.path.join(pkg_share, 'config', 'view_bot.rviz')
     rviz_args = ['-d', rviz_config] if os.path.exists(rviz_config) else []
 
     # Robot State Publisher (wall clock, no Gazebo)
