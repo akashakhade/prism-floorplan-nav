@@ -21,17 +21,22 @@ class SafetyStop(Node):
         self.declare_parameter('rear_stop_distance', 0.30)    # m from LiDAR
         self.declare_parameter('sector_deg', 35.0)            # +/- cone width
         self.declare_parameter('rate', 20.0)                  # Hz
+        self.declare_parameter('cmd_timeout', 0.5)            # s without cmd -> stop
+        self.declare_parameter('scan_timeout', 0.5)           # s without scan -> stop
 
         gp = self.get_parameter
         self.front_stop = float(gp('front_stop_distance').value)
         self.front_slow = float(gp('front_slow_distance').value)
         self.rear_stop = float(gp('rear_stop_distance').value)
         self.half_sector = math.radians(float(gp('sector_deg').value))
+        self.cmd_timeout = float(gp('cmd_timeout').value)
+        self.scan_timeout = float(gp('scan_timeout').value)
 
         self.cmd = Twist()
         self.front_min = math.inf
         self.rear_min = math.inf
-        self.have_scan = False
+        self.last_cmd_time = None    # time of the last velocity command
+        self.last_scan_time = None   # time of the last LiDAR scan
 
         self.create_subscription(
             LaserScan, gp('scan_topic').value, self.scan_cb, qos_profile_sensor_data)
@@ -57,18 +62,36 @@ class SafetyStop(Node):
             elif abs(a) >= math.pi - self.half_sector:
                 rear = min(rear, r)
         self.front_min, self.rear_min = front, rear
-        self.have_scan = True
+        self.last_scan_time = self.get_clock().now()
 
     def cmd_cb(self, msg):
         self.cmd = msg
+        self.last_cmd_time = self.get_clock().now()
+
+    def age(self, stamp):
+        """Seconds since stamp (infinite if never received)."""
+        if stamp is None:
+            return math.inf
+        return (self.get_clock().now() - stamp).nanoseconds * 1e-9
 
     def timer_cb(self):
         out = Twist()
+
+        # Fail safe 1: teleop stopped sending -> full stop (linear AND angular)
+        if self.age(self.last_cmd_time) > self.cmd_timeout:
+            self.pub.publish(out)
+            return
+
         out.angular.z = self.cmd.angular.z     # turning in place is always allowed
         v = self.cmd.linear.x
 
-        if not self.have_scan:
-            v = 0.0                             # fail safe: no LiDAR, no motion
+        # Fail safe 2: no fresh LiDAR -> no forward/backward motion
+        if self.age(self.last_scan_time) > self.scan_timeout:
+            if v != 0.0:
+                self.get_logger().warn(
+                    'No recent LiDAR scan - blocking linear motion',
+                    throttle_duration_sec=2.0)
+            v = 0.0
         elif v > 0.0:
             if self.front_min <= self.front_stop:
                 v = 0.0
