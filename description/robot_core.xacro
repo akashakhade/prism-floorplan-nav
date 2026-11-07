@@ -68,7 +68,7 @@
 
 
         <xacro:inertial_box
-            mass="0.5"
+            mass="2.0"
             x="0.3"
             y="0.3"
             z="0.15">

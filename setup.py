@@ -40,6 +40,11 @@ setup(
             os.path.join('share', package_name, 'config'),
             glob('config/*.rviz') + glob('config/*.yaml')
         ),
+
+        (
+            os.path.join('share', package_name, 'maps'),
+            glob('maps/*.pgm') + glob('maps/*.yaml')
+        ),
     ],
 
     install_requires=['setuptools'],
@@ -63,6 +68,7 @@ setup(
     entry_points={
         'console_scripts': [
             'depth_colorizer = mobile_robot.depth_colorizer:main',
+            'safety_stop = mobile_robot.safety_stop:main'
         ],
     },
 )

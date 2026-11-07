@@ -93,6 +93,14 @@ def generate_launch_description():
         output='screen'
     )
 
+    # LiDAR safety layer: /cmd_vel_teleop -> /cmd_vel
+    safety_stop = Node(
+        package='mobile_robot',
+        executable='safety_stop',
+        parameters=[{'use_sim_time': True}],
+        output='screen'
+    )
+
     # Colour-mapped depth image
     depth_colorizer = Node(
         package='mobile_robot',
@@ -115,4 +123,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    return LaunchDescription([rsp, gazebo, spawn_robot, bridge, ekf, depth_colorizer, rviz])
+    return LaunchDescription([
+        rsp, gazebo, spawn_robot, bridge, ekf,
+        safety_stop, depth_colorizer, rviz
+    ])
