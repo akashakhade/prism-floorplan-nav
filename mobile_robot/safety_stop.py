@@ -21,7 +21,7 @@ class SafetyStop(Node):
         self.declare_parameter('rear_stop_distance', 0.30)    # m from LiDAR
         self.declare_parameter('sector_deg', 35.0)            # +/- cone width
         self.declare_parameter('rate', 20.0)                  # Hz
-        self.declare_parameter('cmd_timeout', 0.5)            # s without cmd -> stop
+        self.declare_parameter('cmd_timeout', 1.0)            # s without cmd -> stop
         self.declare_parameter('scan_timeout', 0.5)           # s without scan -> stop
 
         gp = self.get_parameter
