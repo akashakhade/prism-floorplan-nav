@@ -35,8 +35,11 @@ ros2 launch mobile_robot launch_sim.launch.py
 Drive it (new terminal):
 
 ```bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=cmd_vel_teleop
 ```
+
+Teleop publishes to `/cmd_vel_teleop`; the `safety_stop` node filters it with the LiDAR
+(slows down near obstacles, stops at 0.35 m) and forwards the safe command to `/cmd_vel`.
 
 ## Topics
 
@@ -47,6 +50,8 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 | `/camera/image`, `/camera/depth_image`, `/camera/points` | Image / PointCloud2 | RGB-D camera |
 | `/camera/depth_colored` | Image | depth_colorizer node |
 | `/odom`, `/joint_states` | Odometry / JointState | Diff-drive + encoders |
+| `/cmd_vel_teleop` | Twist | Teleop (raw, unfiltered) |
+| `/cmd_vel` | Twist | safety_stop (LiDAR-filtered) → Gazebo |
 
 ## Author
 **Akash Akhade** — B.E. Computer Engineering · [GitHub](https://github.com/akashakhade)
