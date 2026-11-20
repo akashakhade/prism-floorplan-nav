@@ -6,7 +6,7 @@ package_name = 'mobile_robot'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.1.0',
 
     packages=find_packages(exclude=['test']),
 
@@ -51,11 +51,11 @@ setup(
 
     zip_safe=True,
 
-    maintainer='akashakhade',
+    maintainer='Akash Akhade',
 
-    maintainer_email='akashakhade@todo.todo',
+    maintainer_email='akashakhade2004@gmail.com',
 
-    description='Mobile robot simulation using ROS 2 Jazzy and Gazebo Harmonic',
+    description='PRISM: floor-plan-guided semantic navigation robot (ROS 2 Jazzy + Gazebo Harmonic)',
 
     license='Apache-2.0',
 
