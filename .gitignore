@@ -1,5 +1,3 @@
 __pycache__/
 *.pyc
-maps/college_*
-worlds/college_*
-config/college_*
+
