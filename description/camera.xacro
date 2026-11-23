@@ -59,15 +59,15 @@
             <pose>0 0 0 0 0 0</pose>
             <always_on>true</always_on>
             <visualize>true</visualize>
-            <update_rate>15</update_rate>
+            <update_rate>10</update_rate>
             <topic>camera</topic>
             <gz_frame_id>camera_optical_link</gz_frame_id>
 
             <camera>
                 <horizontal_fov>1.047</horizontal_fov>
                 <image>
-                    <width>640</width>
-                    <height>480</height>
+                    <width>320</width>
+                    <height>240</height>
                     <format>R8G8B8</format>
                 </image>
                 <clip>
