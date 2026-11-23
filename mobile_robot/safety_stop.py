@@ -31,6 +31,17 @@ class SafetyStop(Node):
         self.half_sector = math.radians(float(gp('sector_deg').value))
         self.cmd_timeout = float(gp('cmd_timeout').value)
         self.scan_timeout = float(gp('scan_timeout').value)
+        rate = float(gp('rate').value)
+
+        # Reject impossible settings at startup instead of crashing (or misbehaving) later
+        if not 0.0 < self.front_stop < self.front_slow:
+            raise ValueError(
+                f'Need 0 < front_stop_distance ({self.front_stop}) '
+                f'< front_slow_distance ({self.front_slow})')
+        if self.rear_stop <= 0.0 or rate <= 0.0:
+            raise ValueError('rear_stop_distance and rate must be > 0')
+        if self.cmd_timeout <= 0.0 or self.scan_timeout <= 0.0:
+            raise ValueError('cmd_timeout and scan_timeout must be > 0')
 
         self.cmd = Twist()
         self.front_min = math.inf
@@ -43,7 +54,7 @@ class SafetyStop(Node):
         self.create_subscription(
             Twist, gp('input_topic').value, self.cmd_cb, 10)
         self.pub = self.create_publisher(Twist, gp('output_topic').value, 10)
-        self.create_timer(1.0 / float(gp('rate').value), self.timer_cb)
+        self.create_timer(1.0 / rate, self.timer_cb)
 
         self.get_logger().info(
             f'Safety stop active: front stop {self.front_stop} m, '

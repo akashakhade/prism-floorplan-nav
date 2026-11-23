@@ -22,6 +22,11 @@ class DepthColorizer(Node):
         input_topic = self.get_parameter('input_topic').value
         output_topic = self.get_parameter('output_topic').value
 
+        # Reject impossible settings at startup (avoids divide-by-zero in callback)
+        if not 0.0 <= self.min_depth < self.max_depth:
+            raise ValueError(
+                f'Need 0 <= min_depth ({self.min_depth}) < max_depth ({self.max_depth})')
+
         self.bridge = CvBridge()
         self.sub = self.create_subscription(Image, input_topic, self.callback, 10)
         self.pub = self.create_publisher(Image, output_topic, 10)
