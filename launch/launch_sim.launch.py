@@ -62,7 +62,8 @@ def generate_launch_description():
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
             # odometry + joints (encoders)
             '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
-            f'/world/{world_name}/model/mobile_robot/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model',
+            f'/world/{world_name}/model/mobile_robot/joint_state'
+            '@sensor_msgs/msg/JointState[gz.msgs.Model',
             # LiDAR
             '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
             '/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',

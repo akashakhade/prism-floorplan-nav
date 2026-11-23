@@ -1,6 +1,7 @@
-from setuptools import find_packages, setup
 from glob import glob
 import os
+
+from setuptools import find_packages, setup
 
 package_name = 'mobile_robot'
 
@@ -55,7 +56,8 @@ setup(
 
     maintainer_email='akashakhade2004@gmail.com',
 
-    description='PRISM: floor-plan-guided semantic navigation robot (ROS 2 Jazzy + Gazebo Harmonic)',
+    description='PRISM: floor-plan-guided semantic navigation robot'
+                '(ROS 2 Jazzy + Gazebo Harmonic)',
 
     license='Apache-2.0',
 
