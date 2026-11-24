@@ -15,8 +15,8 @@ perception layer labels objects for semantic goals ("go to kitchen", "find the c
 | Depth colorizer node (TURBO colormap, Python/OpenCV) | ✅ Done |
 | EKF state estimation (wheel odometry + IMU yaw rate) | ✅ Done |
 | LiDAR safety stop with dead-man timeout | ✅ Done |
-| SLAM mapping (slam_toolbox) | 🔄 Next |
-| Nav2 navigation | ⏳ Planned |
+| SLAM mapping (slam_toolbox) | ✅ Done |
+| Nav2 navigation (AMCL + NavFn + Regulated Pure Pursuit) | ✅ Done |
 | Floor-plan → room/door graph → Nav2 waypoints (C++) | ⏳ Planned |
 | YOLOv8 + depth semantic mapping | ⏳ Planned |
 
