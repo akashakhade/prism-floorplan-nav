@@ -41,6 +41,9 @@
   <exec_depend>slam_toolbox</exec_depend>
   <exec_depend>nav2_map_server</exec_depend>
 
+  <!-- Navigation -->
+  <exec_depend>nav2_bringup</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
